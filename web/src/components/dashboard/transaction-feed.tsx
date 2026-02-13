@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { MOCK_TRANSACTIONS } from "@/lib/constants";
 import type { TransactionStatus, ChainId } from "@/types";
@@ -14,45 +14,79 @@ export function TransactionFeed() {
     <Card className="relative overflow-hidden">
       <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
 
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Recent Transactions</CardTitle>
-          <span className="text-xs text-gray-500">{MOCK_TRANSACTIONS.length} total</span>
+      <div className="flex items-center justify-between p-6 pb-0">
+        <div className="flex items-center gap-3">
+          <h3 className="text-lg font-semibold text-gray-50">
+            Recent Transactions
+          </h3>
+          <span className="rounded-full bg-white/[0.06] px-2.5 py-0.5 text-xs font-medium text-gray-400">
+            {MOCK_TRANSACTIONS.length}
+          </span>
         </div>
-      </CardHeader>
-      <CardContent>
-        <div className="flex flex-col">
-          {MOCK_TRANSACTIONS.map((tx, i) => (
-            <div
-              key={tx.id}
-              className={`flex items-center justify-between py-3 ${
-                i !== MOCK_TRANSACTIONS.length - 1 ? "border-b border-white/[0.04]" : ""
-              }`}
-            >
-              <div className="flex flex-col gap-1">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium text-gray-50">
-                    {tx.type}
-                  </span>
-                  <Badge variant={statusVariant[tx.status as TransactionStatus]}>
-                    {tx.status}
-                  </Badge>
-                </div>
-                <span className="font-mono text-xs text-gray-500">
-                  {tx.hash}
-                </span>
-              </div>
-              <div className="flex flex-col items-end gap-1">
-                <span className="text-sm font-medium text-gray-50">
-                  {tx.amount}
-                </span>
-                <div className="flex items-center gap-1.5">
-                  <Badge chain={tx.chain as ChainId}>{tx.chain}</Badge>
-                  <span className="text-xs text-gray-500">{tx.time}</span>
-                </div>
-              </div>
-            </div>
-          ))}
+        <button className="text-xs font-medium text-purple-400 transition-colors hover:text-purple-300">
+          View all
+        </button>
+      </div>
+
+      <CardContent className="pt-4">
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-white/[0.06] text-left">
+                <th className="pb-3 pr-6 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  Type
+                </th>
+                <th className="pb-3 pr-6 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  Status
+                </th>
+                <th className="pb-3 pr-6 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  Hash
+                </th>
+                <th className="pb-3 pr-6 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  Amount
+                </th>
+                <th className="pb-3 pr-6 text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  Chain
+                </th>
+                <th className="pb-3 text-xs font-medium tracking-wider text-gray-500 uppercase text-right">
+                  Time
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {MOCK_TRANSACTIONS.map((tx, i) => (
+                <tr
+                  key={tx.id}
+                  className={`transition-colors hover:bg-white/[0.02] ${
+                    i !== MOCK_TRANSACTIONS.length - 1
+                      ? "border-b border-white/[0.04]"
+                      : ""
+                  }`}
+                >
+                  <td className="py-3 pr-6">
+                    <span className="font-medium text-gray-50">{tx.type}</span>
+                  </td>
+                  <td className="py-3 pr-6">
+                    <Badge variant={statusVariant[tx.status as TransactionStatus]}>
+                      {tx.status}
+                    </Badge>
+                  </td>
+                  <td className="py-3 pr-6 font-mono text-gray-500">
+                    {tx.hash}
+                  </td>
+                  <td className="py-3 pr-6 font-medium text-gray-300">
+                    {tx.amount}
+                  </td>
+                  <td className="py-3 pr-6">
+                    <Badge chain={tx.chain as ChainId}>{tx.chain}</Badge>
+                  </td>
+                  <td className="py-3 text-right text-xs text-gray-500">
+                    {tx.time}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </CardContent>
     </Card>

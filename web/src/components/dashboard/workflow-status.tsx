@@ -1,5 +1,7 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+"use client";
+
+import { Card } from "@/components/ui/card";
+import { Icon } from "@/components/ui/icon";
 import { MOCK_AUTOMATIONS } from "@/lib/constants";
 import type { WorkflowStatus as AutomationStatus } from "@/types";
 
@@ -9,26 +11,27 @@ const statusColor: Record<AutomationStatus, string> = {
   error: "bg-error",
 };
 
-const statusBadge: Record<AutomationStatus, "success" | "warning" | "error"> = {
-  active: "success",
-  paused: "warning",
-  error: "error",
-};
-
 export function AutomationStatusCard() {
-  return (
-    <Card className="relative overflow-hidden">
-      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-success/30 to-transparent" />
+  const activeCount = MOCK_AUTOMATIONS.filter((a) => a.status === "active").length;
 
-      <CardHeader>
-        <div className="flex items-center justify-between">
-          <CardTitle>Automations</CardTitle>
-          <span className="rounded-full bg-success/10 px-2 py-0.5 text-xs font-medium text-success">
-            {MOCK_AUTOMATIONS.filter((a) => a.status === "active").length} active
-          </span>
+  return (
+    <Card className="relative flex flex-col overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-purple-500/40 to-transparent" />
+
+      <div className="flex items-center justify-between p-6 pb-3">
+        <div className="flex flex-col gap-1.5">
+          <h3 className="text-lg font-semibold text-gray-50">Payroll</h3>
+          <p className="text-sm text-gray-500">
+            {activeCount} running, {MOCK_AUTOMATIONS.length - activeCount} paused
+          </p>
         </div>
-      </CardHeader>
-      <CardContent>
+        <button className="flex items-center gap-2 rounded-lg bg-purple-500 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-purple-400 hover:shadow-glow">
+          <Icon name="plus" size={14} />
+          New
+        </button>
+      </div>
+
+      <div className="flex-1 px-6 pb-6">
         <div className="flex flex-col">
           {MOCK_AUTOMATIONS.map((auto, i) => (
             <div
@@ -53,20 +56,23 @@ export function AutomationStatusCard() {
                     {auto.name}
                   </span>
                   <span className="text-xs text-gray-500">
-                    Last run: {auto.lastRun}
+                    Next: {auto.nextRun}
                   </span>
                 </div>
               </div>
-              <div className="flex flex-col items-end gap-1">
-                <Badge variant={statusBadge[auto.status as AutomationStatus]}>
-                  {auto.status}
-                </Badge>
-                <Badge variant="default">{auto.trigger}</Badge>
-              </div>
+              <button
+                className="flex h-8 w-8 items-center justify-center rounded-md border border-white/[0.06] text-gray-400 transition-colors hover:border-white/[0.12] hover:bg-white/[0.04] hover:text-gray-50"
+                aria-label={auto.status === "active" ? "Pause" : "Resume"}
+              >
+                <Icon
+                  name={auto.status === "active" ? "pause" : "play"}
+                  size={14}
+                />
+              </button>
             </div>
           ))}
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 }

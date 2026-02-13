@@ -1,2 +1,4 @@
 node_modules
 dist
+azura/contracts/cache
+azura/contracts/out

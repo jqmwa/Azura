@@ -11,11 +11,7 @@ export function CTASection() {
       <div className="mx-auto max-w-[1280px] px-6">
         <MotionWrapper
           variants={staggerContainer}
-          className="relative overflow-hidden rounded-2xl border border-white/[0.08] px-8 py-16 text-center lg:px-16 lg:py-20"
-          style={{
-            background:
-              "linear-gradient(135deg, rgba(45, 11, 68, 0.8) 0%, rgba(17, 17, 24, 0.9) 40%, rgba(17, 17, 24, 0.9) 60%, rgba(30, 27, 75, 0.6) 100%)",
-          }}
+          className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gray-900/80 px-8 py-16 text-center lg:px-16 lg:py-20"
         >
           {/* Mesh orbs */}
           <div className="pointer-events-none absolute -top-24 -right-24 h-[400px] w-[400px] rounded-full bg-purple-500/15 blur-[100px]" />
@@ -34,18 +30,14 @@ export function CTASection() {
           <div className="relative flex flex-col items-center gap-6">
             <MotionWrapper variants={fadeInUp}>
               <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
-                Ready to automate your{" "}
-                <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-blue-400 bg-clip-text text-transparent">
-                  treasury
-                </span>
-                ?
+                Ready to digitize your business treasury?
               </h2>
             </MotionWrapper>
 
             <MotionWrapper variants={fadeInUp}>
               <p className="max-w-lg text-lg text-gray-400">
-                Start building programmable treasury workflows in minutes.
-                No enterprise sales call required.
+                Add BTC, ETH, and stablecoins to your company&apos;s treasury
+                and let Azura&apos;s AI agent manage it. No sales calls required.
               </p>
             </MotionWrapper>
 
@@ -54,7 +46,7 @@ export function CTASection() {
                 <Link href="/dashboard">
                   <Button
                     size="lg"
-                    className="animate-pulse-glow bg-gradient-to-r from-purple-500 via-violet-500 to-blue-500 hover:from-purple-400 hover:via-violet-400 hover:to-blue-400 shadow-lg shadow-purple-500/20"
+                    className="animate-pulse-glow border-purple-200/30 hover:border-purple-200/50 hover:shadow-[0_0_36px_rgba(99,102,241,0.45),0_4px_16px_rgba(0,0,0,0.3),0_0_0_1px_rgba(34,211,238,0.2)] transition-all duration-200"
                   >
                     Get Started
                   </Button>

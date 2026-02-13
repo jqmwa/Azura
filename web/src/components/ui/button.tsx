@@ -9,7 +9,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-purple-500 text-white hover:bg-purple-400 active:bg-purple-600 active:scale-[0.98] shadow-sm hover:shadow-glow",
+    "btn-cta bg-purple-500/80 backdrop-blur-sm text-white border border-purple-300/25 ring-1 ring-inset ring-white/[0.08] shadow-[0_0_20px_rgba(99,102,241,0.25),0_4px_12px_rgba(0,0,0,0.4)] hover:bg-purple-400/80 hover:border-purple-200/35 hover:ring-white/[0.12] hover:shadow-[0_0_32px_rgba(99,102,241,0.4),0_4px_16px_rgba(0,0,0,0.3),0_0_0_1px_rgba(34,211,238,0.15)] active:bg-purple-600/80 active:scale-[0.98]",
   secondary:
     "bg-gray-800 text-gray-50 border border-gray-700 hover:bg-gray-700 active:bg-gray-800 active:scale-[0.98]",
   ghost:

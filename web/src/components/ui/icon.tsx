@@ -31,6 +31,15 @@ const paths: Record<IconName, string> = {
   minus: "M5 12h14",
   "external-link":
     "M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6m4-3h6v6m-11 5L21 3",
+  sparkles:
+    "M9.937 15.5A2 2 0 008.5 14.063l-6.135-1.582a.5.5 0 010-.962L8.5 9.937A2 2 0 009.937 8.5l1.582-6.135a.5.5 0 01.962 0L14.063 8.5A2 2 0 0015.5 9.937l6.135 1.582a.5.5 0 010 .962L15.5 14.063a2 2 0 00-1.437 1.437l-1.582 6.135a.5.5 0 01-.962 0L9.937 15.5z",
+  send: "M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z",
+  plus: "M12 5v14m-7-7h14",
+  play: "M5 3l14 9-14 9V3z",
+  pause: "M6 4h4v16H6V4zm8 0h4v16h-4V4z",
+  droplet: "M12 2.69l5.66 5.66a8 8 0 11-11.31 0L12 2.69z",
+  "file-code": "M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6zm-1 9l-2 2 2 2m-4-4l2-2-2-2",
+  terminal: "M4 17l6-6-6-6m8 14h8",
 };
 
 export function Icon({ name, className = "", size = 24 }: IconProps) {

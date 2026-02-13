@@ -6,85 +6,88 @@ export const NAV_LINKS = [
 
 export const DASHBOARD_NAV = [
   { label: "Overview", href: "/dashboard", icon: "home" as const },
-  { label: "Automations", href: "/dashboard/automations", icon: "workflow" as const },
+  { label: "Payroll", href: "/dashboard/payroll", icon: "workflow" as const },
+  { label: "Faucet", href: "/dashboard/faucet", icon: "droplet" as const },
+  { label: "Contracts", href: "/dashboard/contracts", icon: "file-code" as const },
+  { label: "Simulator", href: "/dashboard/simulator", icon: "terminal" as const },
   { label: "Settings", href: "/dashboard/settings", icon: "settings" as const },
 ] as const;
 
 export const FEATURES = [
   {
     icon: "workflow" as const,
-    title: "Auto-Rebalancing",
+    title: "AI-Managed Portfolio",
     description:
-      "Azura watches your allocation targets and rebalances when they drift. No spreadsheets, no manual swaps.",
+      "Azura's AI agent monitors your Bitcoin, Ethereum, and stablecoin holdings — rebalancing automatically when your allocation drifts.",
   },
   {
     icon: "crosschain" as const,
-    title: "Cross-Chain Transfers",
+    title: "Multi-Chain Treasury",
     description:
-      "Move funds between Ethereum, Base, Arbitrum, and more. Azura picks the cheapest route automatically.",
+      "Hold assets across Ethereum, Base, Arbitrum, and more. Azura moves funds to the best chain for your business automatically.",
   },
   {
     icon: "code" as const,
-    title: "Scheduled Payroll",
+    title: "Automated Payroll",
     description:
-      "Set up recurring payments to contributors, vendors, or vaults. Azura executes on time, every time.",
+      "Pay your team and vendors in crypto on schedule. Azura handles recurring USDC, ETH, or BTC payments without manual work.",
   },
   {
     icon: "shield" as const,
-    title: "Rule-Based Guardrails",
+    title: "Treasury Guardrails",
     description:
-      "Define spending limits, approval thresholds, and whitelisted addresses. Azura operates within your boundaries.",
+      "Set spending limits, approval thresholds, and whitelisted addresses. Your AI agent always operates within your rules.",
   },
   {
     icon: "monitor" as const,
-    title: "Live Dashboard",
+    title: "Real-Time Overview",
     description:
-      "See every transaction, automation, and balance in one place. Real-time updates across all connected chains.",
+      "Track every asset, transaction, and automation across all chains. Your company's full digital treasury in one dashboard.",
   },
   {
     icon: "globe" as const,
-    title: "Self-Serve Setup",
+    title: "Get Started in Minutes",
     description:
-      "No sales calls, no onboarding queue. Install the CLI, connect your treasury, and Azura is ready to go.",
+      "No sales calls or onboarding queues. Connect your business wallet, fund it with BTC, ETH, or USDC, and Azura takes it from there.",
   },
 ] as const;
 
 export const HOW_IT_WORKS_STEPS = [
   {
     step: 1,
-    title: "Define",
-    description: "Tell Azura what to do. Write your rules in TypeScript or configure them in the dashboard.",
-    code: `import { Azura } from "azura";
+    title: "Connect",
+    description: "Link your business wallet and deposit Bitcoin, Ethereum, or stablecoins. Azura connects to your treasury in minutes.",
+    code: `$ npx azura init
 
-const payroll = Azura.automation("weekly-payroll")
-  .schedule("every friday at 9am")
-  .send("USDC", {
-    recipients: team,
-    chain: "base",
-  });`,
+? Company name: Acme Corp
+? Connect wallet: 0x1a2b...3c4d
+? Initial assets: BTC, ETH, USDC
+✓ Treasury connected
+✓ Dashboard: azura.dev/d/acme-corp`,
   },
   {
     step: 2,
-    title: "Test",
-    description: "Azura dry-runs everything against a forked chain before touching real funds.",
-    code: `$ npx azura test weekly-payroll
+    title: "Configure",
+    description: "Set your rules — allocation targets, spending limits, payroll schedules. Tell Azura how to manage your treasury.",
+    code: `import { Azura } from "azura";
 
-✓ Forking Base at block 24,891,032
-✓ Simulating 12 transfers...
-✓ Total: 45,000 USDC → 12 recipients
-✓ Estimated gas: 0.003 ETH
-✓ All transfers valid. Ready to activate.`,
+const treasury = Azura.treasury("acme-corp")
+  .allocate({ BTC: "40%", ETH: "30%", USDC: "30%" })
+  .rebalance("when drift > 5%")
+  .payroll("every friday", { recipients: team });`,
   },
   {
     step: 3,
-    title: "Activate",
-    description: "Turn it on. Azura takes over and you can watch from the dashboard.",
-    code: `$ npx azura activate weekly-payroll
+    title: "Let Azura Run",
+    description: "Your AI agent takes over. Rebalancing, payments, and cross-chain moves happen automatically while you focus on your business.",
+    code: `$ npx azura status
 
-✓ Automation live on Base
-✓ Schedule: Fridays 9:00 UTC
-✓ Dashboard: azura.dev/d/0x1a2b
-✓ Next run: Friday, Jan 10 09:00 UTC`,
+Treasury: Acme Corp
+✓ AI Agent: Active
+✓ Portfolio: BTC 40% · ETH 30% · USDC 30%
+✓ Next payroll: Friday 09:00 UTC
+✓ Last rebalance: 3 hours ago
+✓ 30d savings: $4,210 in gas fees`,
   },
 ] as const;
 

@@ -22,10 +22,7 @@ export function HowItWorks() {
             How It Works
           </p>
           <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
-            Three steps to{" "}
-            <span className="bg-gradient-to-r from-purple-400 via-violet-400 to-cyan-400 bg-clip-text text-transparent">
-              automated treasury
-            </span>
+            Go from zero to AI-managed treasury
           </h2>
         </MotionWrapper>
 
@@ -35,7 +32,7 @@ export function HowItWorks() {
         >
           {/* Connecting gradient line */}
           <div className="absolute top-8 bottom-8 left-6 hidden w-px lg:left-[calc(50%-0.5px)] lg:block">
-            <div className="h-full w-full bg-gradient-to-b from-purple-500/40 via-blue-500/40 to-cyan-400/40" style={{ maskImage: "repeating-linear-gradient(to bottom, transparent, transparent 4px, black 4px, black 8px)" }} />
+            <div className="h-full w-full border-l border-dashed border-purple-500/30" />
           </div>
 
           {HOW_IT_WORKS_STEPS.map((step, i) => {

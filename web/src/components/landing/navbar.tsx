@@ -42,7 +42,7 @@ export function Navbar() {
             </a>
           ))}
           <Link href="/dashboard">
-            <Button size="sm" className="bg-gradient-to-r from-purple-500 to-blue-500 hover:from-purple-400 hover:to-blue-400 shadow-sm shadow-purple-500/20">
+            <Button size="sm" className="bg-purple-500 hover:bg-purple-400 shadow-sm shadow-purple-500/20 transition-all duration-200">
               Launch App
             </Button>
           </Link>

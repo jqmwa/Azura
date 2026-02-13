@@ -10,7 +10,7 @@ export function Footer() {
           <div className="flex flex-col gap-4">
             <Logo size="lg" />
             <p className="text-sm text-gray-400">
-              The programmable treasury layer. Powered by Chainlink.
+              AI-managed digital treasury for your business. Powered by Chainlink.
             </p>
             <div className="mt-2 inline-flex items-center gap-2 rounded-full border border-gray-700 bg-gray-900 px-3 py-1 text-xs text-gray-400">
               <span className="h-2 w-2 rounded-full bg-info" />

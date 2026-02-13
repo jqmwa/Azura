@@ -15,14 +15,14 @@ export function DashboardPreview() {
             Dashboard
           </p>
           <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
-            Your treasury,{" "}
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              at a glance
+            Your company&apos;s assets,{" "}
+            <span className="text-cyan-400">
+              one dashboard
             </span>
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-gray-400">
-            Real-time portfolio tracking, workflow monitoring, and transaction
-            history — all in one place.
+            See your BTC, ETH, and stablecoin holdings across every chain.
+            Track what your AI agent is doing in real time.
           </p>
         </MotionWrapper>
 
@@ -89,13 +89,13 @@ export function DashboardPreview() {
                     <svg viewBox="0 0 600 200" className="w-full h-full" preserveAspectRatio="none">
                       <defs>
                         <linearGradient id="dashGrad" x1="0" y1="0" x2="1" y2="0">
-                          <stop offset="0%" stopColor="#3B82F6" />
-                          <stop offset="40%" stopColor="#8B5CF6" />
-                          <stop offset="100%" stopColor="#B24BF3" />
+                          <stop offset="0%" stopColor="#6366F1" />
+                          <stop offset="50%" stopColor="#3B82F6" />
+                          <stop offset="100%" stopColor="#22D3EE" />
                         </linearGradient>
                         <linearGradient id="dashFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="#8B5CF6" stopOpacity="0.15" />
-                          <stop offset="100%" stopColor="#8B5CF6" stopOpacity="0" />
+                          <stop offset="0%" stopColor="#6366F1" stopOpacity="0.15" />
+                          <stop offset="100%" stopColor="#6366F1" stopOpacity="0" />
                         </linearGradient>
                       </defs>
                       {/* Grid lines */}
@@ -116,8 +116,8 @@ export function DashboardPreview() {
                         strokeLinecap="round"
                       />
                       {/* Current point */}
-                      <circle cx="600" cy="50" r="4" fill="#B24BF3" />
-                      <circle cx="600" cy="50" r="8" fill="#B24BF3" opacity="0.2" />
+                      <circle cx="600" cy="50" r="4" fill="#22D3EE" />
+                      <circle cx="600" cy="50" r="8" fill="#22D3EE" opacity="0.2" />
                     </svg>
                   </div>
                 </div>

@@ -23,7 +23,7 @@ function CellValue({ value }: { value: boolean | string }) {
       </span>
     );
   return (
-    <span className="inline-flex rounded-full bg-warning/10 px-2 py-0.5 text-[10px] font-medium text-warning">
+    <span className="inline-flex rounded-full bg-[#F2A0B0]/10 px-2 py-0.5 text-[10px] font-medium text-[#F2A0B0]">
       Partial
     </span>
   );
@@ -38,9 +38,9 @@ export function Comparison() {
             Compare
           </p>
           <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
-            How Azura{" "}
-            <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              stacks up
+            Why businesses{" "}
+            <span className="text-cyan-400">
+              switch to Azura
             </span>
           </h2>
         </MotionWrapper>
@@ -61,7 +61,7 @@ export function Comparison() {
                       {c.name}
                     </th>
                   ))}
-                  <th className="px-5 py-4 text-center font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-400 border-l border-white/[0.06]">
+                  <th className="px-5 py-4 text-center font-bold text-purple-400 border-l border-white/[0.06]">
                     Azura
                   </th>
                 </tr>

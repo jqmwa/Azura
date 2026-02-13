@@ -42,7 +42,7 @@ function SparkleCanvas() {
         vy: (Math.random() - 0.5) * 0.25,
         r: Math.random() * 1.8 + 0.4,
         o: Math.random() * 0.4 + 0.08,
-        h: Math.random() > 0.5 ? 270 : 215,
+        h: Math.random() > 0.5 ? 235 : 185,
       });
     }
 
@@ -71,7 +71,7 @@ function MeshGradient() {
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
       <div className="absolute -top-32 right-1/4 h-[600px] w-[600px] rounded-full opacity-25 blur-[120px]"
-        style={{ background: "radial-gradient(circle, #B24BF3 0%, #8F2CC9 40%, transparent 70%)" }} />
+        style={{ background: "radial-gradient(circle, #6366F1 0%, #4F46E5 40%, transparent 70%)" }} />
       <div className="absolute top-1/2 -left-32 h-[500px] w-[500px] rounded-full opacity-15 blur-[100px]"
         style={{ background: "radial-gradient(circle, #3B82F6 0%, #2563EB 40%, transparent 70%)" }} />
       <div className="absolute -bottom-32 right-1/3 h-[400px] w-[400px] rounded-full opacity-10 blur-[100px]"
@@ -119,22 +119,22 @@ export function Hero() {
         <div className="grid w-full grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-0 items-end lg:items-center">
 
           {/* ── Left: Azura character ──────────────────────────── */}
-          <div className="relative hidden lg:col-span-5 lg:flex lg:items-end lg:justify-center lg:self-end">
+          <div className="relative hidden lg:col-span-5 lg:flex lg:items-end lg:justify-start lg:self-end -ml-6">
             {/* Glow behind Azura */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[400px] w-[400px] rounded-full bg-purple-500/15 blur-[80px]" />
+            <div className="absolute bottom-0 left-1/3 -translate-x-1/2 h-[450px] w-[450px] rounded-full bg-purple-500/15 blur-[80px]" />
 
             <motion.div
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.7, delay: 0.2, ease: [0.4, 0, 0.2, 1] }}
-              className="relative z-10"
+              className="relative z-10 translate-y-8"
             >
               <Image
                 src="/azura-hero.png"
                 alt="Azura — AI treasury agent"
-                width={480}
-                height={640}
-                className="h-auto w-full max-w-[420px] object-contain object-bottom drop-shadow-2xl"
+                width={580}
+                height={773}
+                className="h-auto w-full max-w-[520px] object-contain object-bottom drop-shadow-2xl"
                 priority
               />
             </motion.div>
@@ -150,31 +150,25 @@ export function Hero() {
             <motion.div variants={item}>
               <Badge variant="info" className="w-fit gap-1.5 border border-purple-500/20 bg-purple-500/10 text-purple-300 px-3 py-1 text-xs">
                 <span className="h-1.5 w-1.5 rounded-full bg-purple-400 animate-pulse" />
-                Meet your treasury agent
+                AI-powered treasury for your business
               </Badge>
             </motion.div>
 
             <motion.div variants={item}>
               <h1 className="text-4xl font-bold leading-[1.08] tracking-tight sm:text-5xl xl:text-6xl">
-                <span className="block text-gray-50">Treasury intelligence</span>
-                <span
-                  className="block bg-clip-text text-transparent mt-1"
-                  style={{
-                    backgroundImage: "linear-gradient(135deg, #C574F6 0%, #B24BF3 30%, #8B5CF6 55%, #3B82F6 80%, #22D3EE 100%)",
-                    backgroundSize: "200% auto",
-                    animation: "gradient-shift 6s ease-in-out infinite",
-                  }}
-                >
-                  that never sleeps.
+                <span className="block text-gray-50">Your business treasury,</span>
+                <span className="block text-cyan-400 mt-1">
+                  managed by AI.
                 </span>
               </h1>
             </motion.div>
 
             <motion.div variants={item}>
               <p className="max-w-lg text-lg leading-relaxed text-gray-400">
-                Put your treasury on autopilot. Azura handles rebalancing,
-                payroll, and cross-chain transfers around the clock.
-                Set your rules once and let it run.
+                Add Bitcoin, Ethereum, and stablecoins to your company&apos;s
+                digital treasury. Azura&apos;s AI agent handles rebalancing,
+                payroll, and cross-chain transfers — so you can focus on
+                building your business.
               </p>
             </motion.div>
 
@@ -182,7 +176,7 @@ export function Hero() {
               <Link href="/dashboard">
                 <Button
                   size="lg"
-                  className="relative overflow-hidden bg-gradient-to-r from-purple-500 via-violet-500 to-blue-500 hover:from-purple-400 hover:via-violet-400 hover:to-blue-400 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/35 transition-all duration-300"
+                  className="animate-pulse-glow border-purple-200/30 hover:border-purple-200/50 hover:shadow-[0_0_36px_rgba(99,102,241,0.45),0_4px_16px_rgba(0,0,0,0.3),0_0_0_1px_rgba(34,211,238,0.2)] transition-all duration-300"
                 >
                   Open Dashboard
                 </Button>
@@ -207,9 +201,9 @@ export function Hero() {
             {/* Stats strip */}
             <motion.div variants={item} className="flex items-center gap-6 pt-3">
               {[
-                { label: "Chains", value: "6+" },
+                { label: "Supported Chains", value: "6+" },
                 { label: "Uptime", value: "99.9%" },
-                { label: "Managed", value: "$48M+" },
+                { label: "Businesses Onboarded", value: "200+" },
               ].map((stat) => (
                 <div key={stat.label} className="flex flex-col">
                   <span className="text-lg font-bold text-gray-50">{stat.value}</span>
@@ -225,13 +219,13 @@ export function Hero() {
       {/* Mobile: Azura character below content */}
       <div className="relative z-10 flex justify-center lg:hidden -mt-8">
         <div className="relative">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[250px] w-[250px] rounded-full bg-purple-500/15 blur-[60px]" />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[280px] w-[280px] rounded-full bg-purple-500/15 blur-[60px]" />
           <Image
             src="/azura-hero.png"
             alt="Azura — AI treasury agent"
-            width={320}
-            height={426}
-            className="relative h-auto w-[280px] object-contain object-bottom drop-shadow-2xl"
+            width={380}
+            height={507}
+            className="relative h-auto w-[320px] object-contain object-bottom drop-shadow-2xl"
             priority
           />
         </div>

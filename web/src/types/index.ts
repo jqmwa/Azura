@@ -37,4 +37,12 @@ export type IconName =
   | "x"
   | "check"
   | "minus"
-  | "external-link";
+  | "external-link"
+  | "sparkles"
+  | "send"
+  | "plus"
+  | "play"
+  | "pause"
+  | "droplet"
+  | "file-code"
+  | "terminal";
