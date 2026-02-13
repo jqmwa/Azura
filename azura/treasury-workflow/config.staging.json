@@ -1,0 +1,39 @@
+{
+  "schedule": "0 */5 * * * *",
+  "metalsPriceUrl": "https://api.metals.dev/v1/latest?api_key=YOUR_API_KEY&currency=USD&unit=toz",
+  "cryptoPriceUrl": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd",
+  "rwaHoldings": [
+    {
+      "assetType": 2,
+      "symbol": "XAU",
+      "reserveUnits": 100.0,
+      "decimals": 18
+    },
+    {
+      "assetType": 3,
+      "symbol": "XAG",
+      "reserveUnits": 5000.0,
+      "decimals": 18
+    },
+    {
+      "assetType": 4,
+      "symbol": "XPT",
+      "reserveUnits": 50.0,
+      "decimals": 18
+    },
+    {
+      "assetType": 5,
+      "symbol": "XPD",
+      "reserveUnits": 25.0,
+      "decimals": 18
+    }
+  ],
+  "chainSelectorName": "ethereum-testnet-sepolia",
+  "gasLimit": "1500000",
+  "wbtcAddress": "0x0000000000000000000000000000000000000000",
+  "wethAddress": "0x0000000000000000000000000000000000000000",
+  "treasuryWallet": "0x0000000000000000000000000000000000000000",
+  "balanceReaderAddress": "0x4b0739c94C1389B55481cb7506c62430cA7211Cf",
+  "azuraTokenAddress": "0x0000000000000000000000000000000000000000",
+  "treasuryProxyAddress": "0x0000000000000000000000000000000000000000"
+}

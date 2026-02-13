@@ -510,6 +510,76 @@ forge script script/Deploy.s.sol --rpc-url $CRE_RPC_URL --broadcast
 
 ---
 
+## Treasury Workflow
+
+The Treasury Workflow (`azura/treasury-workflow/`) is a multi-asset proof-of-reserves workflow that aggregates crypto and RWA holdings, computes a backing ratio for the Azura token, and writes consensus-signed reports on-chain.
+
+### Asset Types
+
+| Enum | Value | Asset | Price Source |
+|------|-------|-------|-------------|
+| `BTC` | 0 | Bitcoin (WBTC) | CoinGecko |
+| `ETH` | 1 | Ethereum (WETH + native) | CoinGecko |
+| `XAU` | 2 | Gold | metals.dev |
+| `XAG` | 3 | Silver | metals.dev |
+| `XPT` | 4 | Platinum | metals.dev |
+| `XPD` | 5 | Palladium | metals.dev |
+
+### Config Schema
+
+```json
+{
+  "schedule": "0 */5 * * * *",
+  "metalsPriceUrl": "https://api.metals.dev/v1/latest?api_key=KEY&currency=USD&unit=toz",
+  "cryptoPriceUrl": "https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum&vs_currencies=usd",
+  "rwaHoldings": [
+    { "assetType": 2, "symbol": "XAU", "reserveUnits": 100.0, "decimals": 18 }
+  ],
+  "chainSelectorName": "ethereum-testnet-sepolia",
+  "gasLimit": "1500000",
+  "wbtcAddress": "0x...",
+  "wethAddress": "0x...",
+  "treasuryWallet": "0x...",
+  "balanceReaderAddress": "0x...",
+  "azuraTokenAddress": "0x...",
+  "treasuryProxyAddress": "0x..."
+}
+```
+
+- `rwaHoldings[].reserveUnits` — off-chain attested quantity (e.g., 100 troy ounces of gold)
+- Crypto balances (BTC, ETH) are read directly from chain via `balanceOf` and `BalanceReader`
+- All USD values and the backing ratio use 18-decimal fixed-point precision
+
+### Contracts (ABI stubs)
+
+| Contract | Purpose |
+|----------|---------|
+| `AzuraToken` | ERC20 token with mint/burn (extends IERC20) |
+| `AzuraTreasury` | Stores treasury reports (`updateReserves`, `getLatestReport`, `getBackingRatio`) |
+| `AzuraTreasuryProxy` | CRE report receiver (`onReport`) — validates workflow author and forwards to AzuraTreasury |
+
+### Simulation
+
+```bash
+# Install dependencies
+bun install --cwd azura/treasury-workflow
+
+# Simulate (HTTP fetches will work; EVM reads require deployed contracts)
+cre workflow simulate azura/treasury-workflow --target staging-settings --engine-logs
+
+# After deploying contracts and updating config addresses:
+cre workflow simulate azura/treasury-workflow --target staging-settings --broadcast
+```
+
+### Deployment
+
+```bash
+cre workflow deploy azura/treasury-workflow --target staging-settings
+cre workflow activate azura/treasury-workflow --target staging-settings
+```
+
+---
+
 ## Troubleshooting
 
 ### "cre: command not found"

@@ -1,0 +1,24 @@
+# ==========================================================================
+# CRE WORKFLOW SETTINGS FILE
+# ==========================================================================
+# Treasury workflow settings for multi-asset proof-of-reserves.
+# Aggregates crypto (BTC, ETH) and RWA (Gold, Silver, Platinum, Palladium)
+# holdings, computes backing ratio, and writes on-chain to Sepolia.
+
+# ==========================================================================
+staging-settings:
+  user-workflow:
+    workflow-name: "azura-treasury-workflow-staging"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.staging.json"
+    secrets-path: ""
+
+# ==========================================================================
+production-settings:
+  user-workflow:
+    workflow-name: "azura-treasury-workflow-production"
+  workflow-artifacts:
+    workflow-path: "./main.ts"
+    config-path: "./config.production.json"
+    secrets-path: ""

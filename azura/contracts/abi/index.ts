@@ -1,3 +1,6 @@
+export * from './AzuraToken'
+export * from './AzuraTreasury'
+export * from './AzuraTreasuryProxy'
 export * from './BalanceReader'
 export * from './IERC20'
 export * from './IERC165'
