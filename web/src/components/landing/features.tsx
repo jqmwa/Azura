@@ -24,12 +24,12 @@ export function Features() {
       <div className="relative mx-auto max-w-[1280px] px-6">
         <MotionWrapper variants={fadeInUp} className="mb-12 text-center lg:mb-16">
           <p className="mb-3 text-sm font-medium tracking-wider text-purple-400 uppercase">
-            Features
+            What Azura Does
           </p>
           <h2 className="text-3xl font-bold tracking-tight lg:text-4xl">
-            Everything you need for{" "}
+            Your treasury,{" "}
             <span className="bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              programmable treasury
+              handled
             </span>
           </h2>
         </MotionWrapper>

@@ -3,7 +3,7 @@ import { FOOTER_LINKS } from "@/lib/constants";
 
 export function Footer() {
   return (
-    <footer className="border-t border-gray-700 bg-gray-950">
+    <footer className="border-t border-white/[0.06] bg-gray-950">
       <div className="mx-auto max-w-content px-6 py-12 lg:py-16">
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {/* Brand column */}

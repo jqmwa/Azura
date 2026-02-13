@@ -13,7 +13,7 @@ export function Header({ title }: HeaderProps) {
   const { setMobileOpen } = useSidebar();
 
   return (
-    <header className="flex h-16 items-center justify-between border-b border-gray-700 bg-gray-950 px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b border-white/[0.06] bg-gray-950/80 px-6 backdrop-blur-xl">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setMobileOpen(true)}

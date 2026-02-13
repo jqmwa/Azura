@@ -25,7 +25,7 @@ export function Sidebar() {
 
       <aside
         className={cn(
-          "fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-gray-700 bg-gray-900 transition-all duration-250",
+          "fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-white/[0.06] bg-gray-950 transition-all duration-250",
           collapsed ? "w-16" : "w-[260px]",
           mobileOpen
             ? "translate-x-0"
@@ -33,7 +33,7 @@ export function Sidebar() {
         )}
       >
         {/* Header */}
-        <div className="flex h-16 items-center justify-between border-b border-gray-700 px-4">
+        <div className="flex h-16 items-center justify-between border-b border-white/[0.06] px-4">
           {!collapsed && <Logo size="md" />}
           <button
             onClick={toggle}
@@ -70,8 +70,8 @@ export function Sidebar() {
                     className={cn(
                       "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                       isActive
-                        ? "bg-purple-500/10 text-purple-400"
-                        : "text-gray-400 hover:bg-gray-800 hover:text-gray-50"
+                        ? "bg-purple-500/10 text-purple-400 border border-purple-500/10"
+                        : "text-gray-400 hover:bg-white/[0.04] hover:text-gray-50"
                     )}
                   >
                     <Icon name={item.icon as IconName} size={18} />
@@ -84,7 +84,7 @@ export function Sidebar() {
         </nav>
 
         {/* Bottom */}
-        <div className="border-t border-gray-700 p-3">
+        <div className="border-t border-white/[0.06] p-3">
           <div
             className={cn(
               "flex items-center gap-3 rounded-md px-3 py-2",

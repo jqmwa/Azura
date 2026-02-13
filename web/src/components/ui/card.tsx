@@ -9,7 +9,7 @@ export function Card({ children, className }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-lg border border-gray-700 bg-gray-900 shadow-sm",
+        "rounded-lg border border-white/[0.06] bg-gradient-to-br from-gray-900 to-gray-900/80 shadow-md transition-colors hover:border-white/[0.1]",
         className
       )}
     >

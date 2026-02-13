@@ -6,93 +6,92 @@ export const NAV_LINKS = [
 
 export const DASHBOARD_NAV = [
   { label: "Overview", href: "/dashboard", icon: "home" as const },
-  { label: "Workflows", href: "/dashboard/workflows", icon: "workflow" as const },
+  { label: "Automations", href: "/dashboard/automations", icon: "workflow" as const },
   { label: "Settings", href: "/dashboard/settings", icon: "settings" as const },
 ] as const;
 
 export const FEATURES = [
   {
     icon: "workflow" as const,
-    title: "Automated Workflows",
+    title: "Auto-Rebalancing",
     description:
-      "Define treasury operations as code. Schedule payments, rebalancing, and conditional transfers with CRE triggers.",
+      "Azura watches your allocation targets and rebalances when they drift. No spreadsheets, no manual swaps.",
   },
   {
     icon: "crosschain" as const,
-    title: "Cross-Chain Native",
+    title: "Cross-Chain Transfers",
     description:
-      "Move assets across chains seamlessly with Chainlink CCIP. One workflow, multiple networks.",
+      "Move funds between Ethereum, Base, Arbitrum, and more. Azura picks the cheapest route automatically.",
   },
   {
     icon: "code" as const,
-    title: "Developer-First",
+    title: "Scheduled Payroll",
     description:
-      "CLI + SDK tooling designed for engineers. npx azura to start. No enterprise sales process.",
+      "Set up recurring payments to contributors, vendors, or vaults. Azura executes on time, every time.",
   },
   {
     icon: "shield" as const,
-    title: "Chainlink-Secured",
+    title: "Rule-Based Guardrails",
     description:
-      "Powered by Chainlink's decentralized oracle network. Enterprise-grade security without the enterprise.",
+      "Define spending limits, approval thresholds, and whitelisted addresses. Azura operates within your boundaries.",
   },
   {
     icon: "monitor" as const,
-    title: "Real-Time Monitoring",
+    title: "Live Dashboard",
     description:
-      "Track workflow health, transaction status, and portfolio state in a unified dashboard.",
+      "See every transaction, automation, and balance in one place. Real-time updates across all connected chains.",
   },
   {
     icon: "globe" as const,
-    title: "Open Infrastructure",
+    title: "Self-Serve Setup",
     description:
-      "Fully open-source, self-serve, and composable. Build on top of Azura without permission.",
+      "No sales calls, no onboarding queue. Install the CLI, connect your treasury, and Azura is ready to go.",
   },
 ] as const;
 
 export const HOW_IT_WORKS_STEPS = [
   {
     step: 1,
-    title: "Write",
-    description: "Define your treasury workflow in TypeScript using the Azura SDK.",
+    title: "Define",
+    description: "Tell Azura what to do. Write your rules in TypeScript or configure them in the dashboard.",
     code: `import { Azura } from "azura";
 
-const workflow = Azura.workflow("weekly-payroll")
-  .trigger("cron", "0 9 * * FRI")
-  .action("transfer", {
-    token: "USDC",
-    recipients: payroll,
+const payroll = Azura.automation("weekly-payroll")
+  .schedule("every friday at 9am")
+  .send("USDC", {
+    recipients: team,
     chain: "base",
   });`,
   },
   {
     step: 2,
-    title: "Simulate",
-    description: "Test your workflow against forked mainnet state before deploying.",
-    code: `$ npx azura simulate weekly-payroll
+    title: "Test",
+    description: "Azura dry-runs everything against a forked chain before touching real funds.",
+    code: `$ npx azura test weekly-payroll
 
-✓ Forking Base mainnet at block 24,891,032
+✓ Forking Base at block 24,891,032
 ✓ Simulating 12 transfers...
 ✓ Total: 45,000 USDC → 12 recipients
 ✓ Estimated gas: 0.003 ETH
-✓ All transfers validated`,
+✓ All transfers valid. Ready to activate.`,
   },
   {
     step: 3,
-    title: "Deploy",
-    description: "Deploy to Chainlink CRE and monitor execution in real time.",
-    code: `$ npx azura deploy weekly-payroll --network base
+    title: "Activate",
+    description: "Turn it on. Azura takes over and you can watch from the dashboard.",
+    code: `$ npx azura activate weekly-payroll
 
-✓ Workflow registered with CRE
-✓ Trigger configured: Fridays 9:00 UTC
-✓ Monitoring dashboard: azura.dev/d/0x1a2b
-✓ Next execution: Friday, Jan 10 09:00 UTC`,
+✓ Automation live on Base
+✓ Schedule: Fridays 9:00 UTC
+✓ Dashboard: azura.dev/d/0x1a2b
+✓ Next run: Friday, Jan 10 09:00 UTC`,
   },
 ] as const;
 
 export const COMPARISON_DIMENSIONS = [
   { key: "selfServe", label: "Self-Serve" },
   { key: "programmable", label: "Programmable" },
-  { key: "automated", label: "Automated Workflows" },
+  { key: "automated", label: "Automations" },
   { key: "crossChain", label: "Cross-Chain Native" },
   { key: "devFirst", label: "Developer-First" },
   { key: "openInfra", label: "Open Infrastructure" },
@@ -241,12 +240,12 @@ export const MOCK_TRANSACTIONS = [
   },
 ] as const;
 
-export const MOCK_WORKFLOWS = [
+export const MOCK_AUTOMATIONS = [
   {
     id: "1",
     name: "Weekly Payroll",
     status: "active" as const,
-    trigger: "cron",
+    trigger: "schedule",
     lastRun: "2 hours ago",
     nextRun: "Fri 09:00 UTC",
   },

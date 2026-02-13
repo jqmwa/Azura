@@ -11,16 +11,23 @@ const statusVariant: Record<TransactionStatus, "success" | "warning" | "error"> 
 
 export function TransactionFeed() {
   return (
-    <Card>
+    <Card className="relative overflow-hidden">
+      <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-blue-500/30 to-transparent" />
+
       <CardHeader>
-        <CardTitle>Recent Transactions</CardTitle>
+        <div className="flex items-center justify-between">
+          <CardTitle>Recent Transactions</CardTitle>
+          <span className="text-xs text-gray-500">{MOCK_TRANSACTIONS.length} total</span>
+        </div>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col divide-y divide-gray-700/50">
-          {MOCK_TRANSACTIONS.map((tx) => (
+        <div className="flex flex-col">
+          {MOCK_TRANSACTIONS.map((tx, i) => (
             <div
               key={tx.id}
-              className="flex items-center justify-between py-3 first:pt-0 last:pb-0"
+              className={`flex items-center justify-between py-3 ${
+                i !== MOCK_TRANSACTIONS.length - 1 ? "border-b border-white/[0.04]" : ""
+              }`}
             >
               <div className="flex flex-col gap-1">
                 <div className="flex items-center gap-2">
@@ -31,7 +38,7 @@ export function TransactionFeed() {
                     {tx.status}
                   </Badge>
                 </div>
-                <span className="font-mono text-xs text-gray-400">
+                <span className="font-mono text-xs text-gray-500">
                   {tx.hash}
                 </span>
               </div>
@@ -41,7 +48,7 @@ export function TransactionFeed() {
                 </span>
                 <div className="flex items-center gap-1.5">
                   <Badge chain={tx.chain as ChainId}>{tx.chain}</Badge>
-                  <span className="text-xs text-gray-400">{tx.time}</span>
+                  <span className="text-xs text-gray-500">{tx.time}</span>
                 </div>
               </div>
             </div>
