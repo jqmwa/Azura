@@ -7,7 +7,7 @@ export default function NotFound() {
     <div className="flex min-h-screen flex-col items-center justify-center px-6">
       <div className="relative flex flex-col items-center gap-6">
         <Image
-          src="/azura-character.png"
+          src="/azura-character.webp"
           alt="Azura"
           width={320}
           height={420}

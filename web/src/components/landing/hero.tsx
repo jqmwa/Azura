@@ -130,7 +130,7 @@ export function Hero() {
               className="relative z-10 translate-y-8"
             >
               <Image
-                src="/azura-hero.png"
+                src="/azura-hero.webp"
                 alt="Azura — AI treasury agent"
                 width={580}
                 height={773}
@@ -221,7 +221,7 @@ export function Hero() {
         <div className="relative">
           <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[280px] w-[280px] rounded-full bg-purple-500/15 blur-[60px]" />
           <Image
-            src="/azura-hero.png"
+            src="/azura-hero.webp"
             alt="Azura — AI treasury agent"
             width={380}
             height={507}

@@ -16,16 +16,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Azura — Programmable Treasury Layer",
+  title: "Azura — AI-Managed Digital Treasury for Your Business",
   description:
-    "Automate cross-chain treasury operations with code-driven workflows powered by Chainlink.",
+    "Add Bitcoin, Ethereum, and stablecoins to your company's treasury. Azura's AI agent handles rebalancing, payroll, and cross-chain transfers automatically.",
   keywords: [
-    "treasury",
-    "DeFi",
+    "digital treasury",
+    "business crypto",
+    "AI treasury management",
+    "Bitcoin",
+    "Ethereum",
+    "stablecoins",
     "Chainlink",
     "cross-chain",
-    "automation",
-    "workflow",
+    "payroll",
   ],
 };
 

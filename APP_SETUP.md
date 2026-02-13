@@ -77,13 +77,27 @@ You must be logged in before deploying workflows or managing secrets.
 cre init --project-name azura --workflow-name my-workflow
 ```
 
-This scaffolds:
+This scaffolds the base CRE project. With workflows and contracts added, the full structure is:
 
 ```
 azura/
-├── my-workflow/
-│   ├── main.ts
-│   ├── workflow.yaml
+├── contracts/
+│   ├── abi/            # TypeScript ABI stubs
+│   ├── src/            # Solidity contracts
+│   ├── script/         # Foundry deploy scripts
+│   ├── test/           # Foundry tests
+│   ├── lib/            # Dependencies (forge-std, openzeppelin-contracts)
+│   └── foundry.toml    # Foundry config
+├── treasury-workflow/
+│   ├── main.ts         # Workflow entry point
+│   ├── report.ts       # Report builder + encoder
+│   ├── readers.ts      # On-chain balance readers
+│   ├── fetchers.ts     # External API fetchers
+│   ├── writer.ts       # On-chain report writer
+│   ├── types.ts        # TypeScript types
+│   ├── workflow.yaml   # Target settings
+│   ├── config.staging.json
+│   ├── config.production.json
 │   ├── package.json
 │   └── tsconfig.json
 ├── project.yaml
@@ -447,6 +461,88 @@ cre secrets execute bundle.json
 
 ## Smart Contract Integration
 
+### Foundry Project Structure
+
+The Solidity contracts live in `azura/contracts/` alongside the TypeScript ABI stubs:
+
+```
+azura/contracts/
+├── abi/                              # TypeScript ABI stubs (used by workflows)
+│   ├── index.ts
+│   ├── AzuraToken.ts
+│   ├── AzuraTreasury.ts
+│   ├── AzuraTreasuryProxy.ts
+│   └── ...
+├── src/                              # Solidity source contracts
+│   ├── AzuraToken.sol                # ERC20 + Ownable, mint/burn
+│   ├── AzuraTreasury.sol             # Treasury report storage, proxy auth
+│   └── AzuraTreasuryProxy.sol        # CRE IReceiver, metadata validation
+├── script/
+│   └── Deploy.s.sol                  # Foundry deploy script (all 3 contracts)
+├── test/
+│   └── AzuraTreasury.t.sol           # Foundry tests (11 tests)
+├── lib/
+│   ├── forge-std/
+│   └── openzeppelin-contracts/
+├── foundry.toml                      # Foundry config (Solc 0.8.24, OZ remappings)
+├── broadcast/                        # Deploy transaction logs (auto-generated)
+└── out/                              # Compiled artifacts (auto-generated)
+```
+
+### Contracts Overview
+
+| Contract | Solidity | Description |
+|----------|----------|-------------|
+| `AzuraToken` | `src/AzuraToken.sol` | ERC20 with `Ownable`. Owner can `mint(to, amount)`, anyone can `burn(amount)` their own tokens. Constructor: `(name, symbol, initialSupply)` |
+| `AzuraTreasury` | `src/AzuraTreasury.sol` | Stores `TreasuryReport` struct on-chain. Only callable by authorized proxy or owner. Exposes `updateReserves()`, `getLatestReport()`, `getBackingRatio()`, `getTotalValue()`, `lastUpdated()` |
+| `AzuraTreasuryProxy` | `src/AzuraTreasuryProxy.sol` | Implements `IReceiver.onReport()`. Decodes CRE metadata (executionId, workflowOwner, workflowName), validates author and workflow name, then forwards decoded `TreasuryReport` to `AzuraTreasury.updateReserves()` |
+
+### Deployed Addresses (Sepolia)
+
+| Contract | Address |
+|----------|---------|
+| **AzuraToken** | `0x31E56aC35E34aAD04707e9Bf75E3D7f3d8F5bE44` |
+| **AzuraTreasury** | `0x4DdE462B7e36Ee1516A2B46c045b83C8d504B951` |
+| **AzuraTreasuryProxy** | `0xac32FeFF6aF183d6beBb7426aBcC310DfF36c8D4` |
+| **Deployer** | `0x68692C6E2Ec8D49Dc0a9C5f175CB9b8338e691A4` |
+
+### Onchain Write Pattern
+
+CRE uses a two-step write pattern:
+1. **Workflow** generates a cryptographically signed report via `runtime.report()`
+2. **Proxy contract** (`AzuraTreasuryProxy`) receives the report via `onReport()`, validates the CRE metadata (author address + workflow name), then forwards the decoded `TreasuryReport` to `AzuraTreasury.updateReserves()`
+
+This ensures all onchain writes are consensus-verified by the DON before execution.
+
+### Build and Test Contracts
+
+```bash
+cd azura/contracts
+
+# Build
+forge build
+
+# Run tests (11 tests covering token, treasury, proxy, auth, events)
+forge test -v
+```
+
+### Deploy Contracts (Foundry)
+
+The deploy script (`script/Deploy.s.sol`) deploys all 3 contracts and wires the proxy authorization:
+
+```bash
+cd azura/contracts
+DEPLOYER_PRIVATE_KEY=0x... forge script script/Deploy.s.sol \
+  --rpc-url https://ethereum-sepolia-rpc.publicnode.com \
+  --broadcast
+```
+
+Deploy order:
+1. `AzuraToken("Azura", "AZURA", 1_000_000e18)` — mints initial supply to deployer
+2. `AzuraTreasury(deployer)` — deployer as initial authorized caller
+3. `AzuraTreasuryProxy(treasuryAddr, deployer, workflowName)` — CRE report receiver
+4. `AzuraTreasury.setProxy(proxyAddr)` — authorize the proxy contract
+
 ### Generate Go Bindings from ABI
 
 ```bash
@@ -455,22 +551,6 @@ cre generate-bindings evm
 ```
 
 Generates Go binding packages in `generated/` (one subdirectory per contract).
-
-### Onchain Write Pattern
-
-CRE uses a two-step write pattern:
-1. **Workflow** generates a cryptographically signed report
-2. **Consumer contract** receives the report, verifies the signature, and processes the data
-
-This ensures all onchain writes are consensus-verified by the DON before execution.
-
-### Deploy Contracts (Foundry)
-
-```bash
-cd contracts
-forge build
-forge script script/Deploy.s.sol --rpc-url $CRE_RPC_URL --broadcast
-```
 
 ---
 
@@ -550,13 +630,15 @@ The Treasury Workflow (`azura/treasury-workflow/`) is a multi-asset proof-of-res
 - Crypto balances (BTC, ETH) are read directly from chain via `balanceOf` and `BalanceReader`
 - All USD values and the backing ratio use 18-decimal fixed-point precision
 
-### Contracts (ABI stubs)
+### Contracts
 
-| Contract | Purpose |
-|----------|---------|
-| `AzuraToken` | ERC20 token with mint/burn (extends IERC20) |
-| `AzuraTreasury` | Stores treasury reports (`updateReserves`, `getLatestReport`, `getBackingRatio`) |
-| `AzuraTreasuryProxy` | CRE report receiver (`onReport`) — validates workflow author and forwards to AzuraTreasury |
+All three contracts are deployed to Sepolia (see [Smart Contract Integration](#smart-contract-integration) for addresses):
+
+| Contract | Solidity | Purpose |
+|----------|----------|---------|
+| `AzuraToken` | `contracts/src/AzuraToken.sol` | ERC20 token with mint/burn (extends IERC20) |
+| `AzuraTreasury` | `contracts/src/AzuraTreasury.sol` | Stores treasury reports (`updateReserves`, `getLatestReport`, `getBackingRatio`) |
+| `AzuraTreasuryProxy` | `contracts/src/AzuraTreasuryProxy.sol` | CRE report receiver (`onReport`) — validates workflow author and forwards to AzuraTreasury |
 
 ### Simulation
 
@@ -564,10 +646,10 @@ The Treasury Workflow (`azura/treasury-workflow/`) is a multi-asset proof-of-res
 # Install dependencies
 bun install --cwd azura/treasury-workflow
 
-# Simulate (HTTP fetches will work; EVM reads require deployed contracts)
+# Simulate against deployed Sepolia contracts
 cre workflow simulate azura/treasury-workflow --target staging-settings --engine-logs
 
-# After deploying contracts and updating config addresses:
+# Simulate with broadcast (submits real transactions)
 cre workflow simulate azura/treasury-workflow --target staging-settings --broadcast
 ```
 
